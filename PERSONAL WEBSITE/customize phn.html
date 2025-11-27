@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Custom Phone Screen</title>
+<style>
+  body {
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #111827;
+    color: #fff;
+    margin: 0;
+    padding: 20px;
+  }
+
+  h1 {
+    color: #00bcd4;
+    margin-bottom: 15px;
+  }
+
+  /* 📱 Phone Container */
+  .phone {
+    width: 280px;
+    height: 520px;
+    background: url('https://images.unsplash.com/photo-1517816743773-6e0fd518b4a6?auto=format&fit=crop&w=400&q=80') center/cover;
+    border: 12px solid #000;
+    border-radius: 35px;
+    position: relative;
+    box-shadow: 0 0 25px rgba(0,0,0,0.9);
+    overflow: hidden;
+  }
+
+  /* Speaker and Home Button */
+  .phone::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 6px;
+    background: #222;
+    border-radius: 3px;
+  }
+
+  .phone::after {
+    content: '';
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 40px;
+    background: #000;
+    border-radius: 50%;
+    box-shadow: inset 0 0 6px #333;
+  }
+
+  /* 🌟 Screen Glow / Reflection */
+  .phone::selection,
+  .screen::selection {
+    background: transparent;
+  }
+
+  .phone .overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.08), transparent 70%);
+    pointer-events: none;
+  }
+
+  /* 🕓 Status Bar */
+  .status-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    background: rgba(0,0,0,0.4);
+    font-size: 14px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+  }
+
+  .status-icons {
+    display: flex;
+    align-items: center;
+  }
+
+  .status-icons img {
+    width: 18px;
+    margin-left: 6px;
+    filter: brightness(0) invert(1);
+  }
+
+  /* 🧱 App Grid */
+  .screen {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    padding: 50px 20px 20px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    text-align: center;
+    transition: transform 0.2s;
+  }
+
+  .app img {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    background: #333;
+    object-fit: cover;
+  }
+
+  .app:hover {
+    transform: scale(1.1);
+  }
+
+  .app span {
+    font-size: 12px;
+    margin-top: 5px;
+  }
+
+  /* 💡 Controls */
+  .controls {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 280px;
+  }
+
+  input, button {
+    padding: 8px;
+    border-radius: 6px;
+    border: none;
+    font-size: 14px;
+  }
+
+  input {
+    width: 100%;
+  }
+
+  button {
+    background: #00bcd4;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
+  }
+
+  button:hover {
+    background: #0097a7;
+  }
+
+  /* ✨ Animation for new apps */
+  @keyframes pop {
+    from { transform: scale(0); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+<h1>📱 Customize Your Phone Screen</h1>
+
+<div class="phone" id="phone">
+
+  <!-- 🕓 Status Bar -->
+  <div class="status-bar">
+    <span id="time">12:00</span>
+    <div class="status-icons">
+      <img src="https://cdn-icons-png.flaticon.com/512/60/60525.png" alt="Signal">
+      <img src="https://cdn-icons-png.flaticon.com/512/61/61456.png" alt="WiFi">
+      <img src="https://cdn-icons-png.flaticon.com/512/61/61457.png" alt="Battery">
+    </div>
+  </div>
+
+  <!-- 🌈 Main Screen -->
+  <div class="screen" id="screen">
+
+    <div class="app" onclick="openApp('https://mail.google.com')">
+      <img src="https://cdn-icons-png.flaticon.com/512/281/281769.png" alt="Email">
+      <span>Email</span>
+    </div>
+
+    <div class="app" onclick="openApp('https://www.amazon.in')">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon">
+      <span>Amazon</span>
+    </div>
+
+    <div class="app" onclick="openApp('https://web.whatsapp.com')">
+      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="WhatsApp">
+      <span>WhatsApp</span>
+    </div>
+
+    <div class="app" onclick="openApp('https://github.com')">
+      <img src="https://cdn-icons-png.flaticon.com/512/733/733553.png" alt="GitHub">
+      <span>GitHub</span>
+    </div>
+
+    <div class="app" onclick="openApp('https://www.linkedin.com')">
+      <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn">
+      <span>LinkedIn</span>
+    </div>
+
+    <div class="app" onclick="openApp('https://www.flipkart.com')">
+      <img src="flipkart.png" alt="Flipkart">
+      <span>Flipkart</span>
+    </div>
+
+  </div>
+  <div class="overlay"></div>
+</div>
+
+
+<div class="controls">
+  <input type="color" id="bgColor" value="#4a90e2">
+  <button onclick="changeWallpaper()">Change Background Color</button>
+
+  <input type="text" id="iconUrl" placeholder="Enter icon image URL">
+  <input type="text" id="iconName" placeholder="Enter app name">
+  <input type="text" id="appLink" placeholder="Enter website URL (https://...)">
+  <button onclick="addApp()">Add New App</button>
+</div>
+
+<script>
+  // 🕒 Live Clock
+  function updateClock() {
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    document.getElementById('time').textContent = `${hours}:${minutes}`;
+  }
+  setInterval(updateClock, 1000);
+  updateClock();
+
+  
+  function changeWallpaper() {
+    const color = document.getElementById('bgColor').value;
+    const phone = document.getElementById('phone');
+    phone.style.background = `linear-gradient(${color}80, ${color}80),
+      url('https://images.unsplash.com/photo-1517816743773-6e0fd518b4a6?auto=format&fit=crop&w=400&q=80') center/cover`;
+  }
+
+  
+  function openApp(url) {
+    window.open(url, '_blank');
+  }
+
+  
+  function addApp() {
+    const iconUrl = document.getElementById('iconUrl').value.trim();
+    const iconName = document.getElementById('iconName').value.trim();
+    const appLink = document.getElementById('appLink').value.trim();
+
+    if (!iconUrl || !iconName || !appLink) {
+      alert('Please fill all fields: image URL, name, and website link.');
+      return;
+    }
+
+    const app = document.createElement('div');
+    app.classList.add('app');
+    app.style.animation = "pop 0.3s ease";
+    app.setAttribute('onclick', `openApp('${appLink}')`);
+    app.innerHTML = `<img src="${iconUrl}" alt="${iconName}"><span>${iconName}</span>`;
+    document.getElementById('screen').appendChild(app);
+
+    // Clear inputs
+    document.getElementById('iconUrl').value = '';
+    document.getElementById('iconName').value = '';
+    document.getElementById('appLink').value = '';
+  }
+</script>
+
+</body>
+</html>
